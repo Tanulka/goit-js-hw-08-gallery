@@ -31,9 +31,10 @@ const lightboxOverlayEl = document.querySelector('.lightbox__overlay');
 lightboxButtonEl.addEventListener('click', closeModal);
 lightboxOverlayEl.addEventListener('click', closeModal);
 window.addEventListener('keydown', closeModal);
+window.addEventListener('keydown', _.throttle(next, 500, { leading: true, trailing: true }));
+window.addEventListener('keydown', _.throttle(previous, 500, { leading: true, trailing: true }));
 
 function closeModal(e) {
-  console.log(e);
   if (e.type === 'keydown' && e.key !== 'Escape') {
     return;
   }
@@ -44,4 +45,38 @@ function closeModal(e) {
 
 function closeEl(element) {
   element.classList.remove('is-open');
+}
+
+function next(e) {
+  if (e.key !== 'ArrowRight') {
+    return;
+  }
+
+  let index = galleryItems.findIndex((img) => img.original === modalImg.getAttribute('src'));
+
+  if (index < galleryItems.length - 1) {
+    index++;
+  } else {
+    index = 0;
+  }
+
+  modalImg.setAttribute('src', galleryItems[index].original);
+  modalImg.setAttribute('alt', galleryItems[index].description);
+}
+
+function previous(e) {
+  if (e.key !== 'ArrowLeft') {
+    return;
+  }
+
+  let index = galleryItems.findIndex((img) => img.original === modalImg.getAttribute('src'));
+
+  if (index > 0) {
+    index--;
+  } else {
+    index = galleryItems.length - 1;
+  }
+
+  modalImg.setAttribute('src', galleryItems[index].original);
+  modalImg.setAttribute('alt', galleryItems[index].description);
 }
