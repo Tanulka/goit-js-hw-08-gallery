@@ -60,8 +60,7 @@ function next(e) {
     index = 0;
   }
 
-  modalImg.setAttribute('src', galleryItems[index].original);
-  modalImg.setAttribute('alt', galleryItems[index].description);
+  addAtribute(modalImg);
 }
 
 function previous(e) {
@@ -77,6 +76,10 @@ function previous(e) {
     index = galleryItems.length - 1;
   }
 
-  modalImg.setAttribute('src', galleryItems[index].original);
-  modalImg.setAttribute('alt', galleryItems[index].description);
+  addAtribute(modalImg);
+}
+
+function addAtribute(el) {
+  el.setAttribute('src', galleryItems[index].original);
+  el.setAttribute('alt', galleryItems[index].description);
 }
